@@ -38,6 +38,7 @@ function Products({cart, increaseQuantity, decreaseQuantity}) {
   // let products = [];
 
   let [products, setProducts] = useState([]);
+  console.log("products")
 
   console.log(useWindowSize());
   useEffect(() => {
