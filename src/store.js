@@ -1,24 +1,68 @@
 import { createStore } from "redux";
+import { act } from "react";
+import {omit} from "omit";
 function cartReducer(state= { items: {}}, action) {
     switch(action.type){
-        case "ADD_TO_CART":
-            const newCart = { ...state.items };
-            if (!newCart[action.product.id]) {
-                newCart[action.product.id] = {
-                    ...action.product,
-                    quantity: 0
-                };
+        case "ADD_TO_CART":{
+            const product = action.payload;
+            if (state.items[product.id]) 
+                {
+                    return {
+                        ...state,
+                        items: {
+                            ...state.items,
+                            [product.id]: 
+                            {
+                                ...state.items[product.id],
+                                quantity: state.items[product.id].quantity + 1
+                            }
+                        }
+                    }
+                } 
+                else 
+                {
+                    return {
+                        ...state,
+                        items: 
+                        {
+                            ...state.items,
+                            [product.id]: 
+                            {
+                                ...product,
+                                quantity: 1
+                            }
+                        
+                        }
+                    }
+                }
+
             }
-            newCart[action.product.id].quantity += 1;
-            return { items: newCart };
+
         case "REMOVE_FROM_CART":
-            const newCart1 = { ...state.items };
-            if (!newCart1[action.product.id]) return;
-            newCart1[action.product.id].quantity -= 1;
-            if (newCart1[action.product.id].quantity <= 0) {
-                delete newCart1[action.product.id];
+            {
+                const product = action.payload;
+                if (state.items[product.id].quantity <= 1) 
+                {
+                    return {
+                        ...state,
+                        items: omit(state.items, product.id)
+                    }
+                } 
+                else 
+                {
+                    return {
+                        ...state,
+                        items: {
+                            ...state.items,
+                            [product.id]: {
+                                ...state.items[product.id],
+                                quantity: state.items[product.id].quantity - 1
+                            }
+                        }
+                    }
+                }
             }
-            return { items: newCart1 };
+           
         default:
             return state;
     }
