@@ -1,10 +1,11 @@
 // ProductCard.js
 import './ProductCard.css';
-import ReduxAddToCart from '../ReduxAddToCart';
+import ReduxAddToCart from '../ReduxAddToCart/ReduxAddToCart';
 import { useRef, useState } from 'react';
 import logo1 from '../../assests/logo1.png';
 
 function ProductCard({ product }) {
+  console.log(product)
   let pRef = useRef(null);
   let iRef = useRef(null);
   let oRef = useRef(null);
