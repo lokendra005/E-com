@@ -1,30 +1,25 @@
 import { useSelector, useDispatch } from "react-redux";
-function AddToCart({ product }) {
+
+function ReduxAddToCart({ product }) {
     console.log("add to cart", product.id);
     // useSelector
     let dispatch = useDispatch();
     function increase() {
-        console.log("increase");
         //dispatch({type: , payload: })
         dispatch({ type: "ADD_TO_CART", payload: product });
     }
     function decrease() {
-        console.log("decrease");
-        dispatch({ type: "REMOVE_FROM_CART", payload: product });
      //dispatch({type: , payload: })
+     dispatch({ type: "REMOVE_FROM_CART", payload: product });
     }
-    
 
-    let state useSelector((state)=>{
-        return state.cart;    
+    let quantity = useSelector((state) => {
+        return state.items[product.id]?.quantity || 0;
     })
 
-
-    const quantity = cart[product.id] ? cart[product.id].quantity : 0;
     if (quantity === 0) {
         return (
             <div>
-                
                 <button onClick={increase}>AddToCart</button>
             </div>
      )  
@@ -38,4 +33,16 @@ function AddToCart({ product }) {
         )
     }
 }
-export default AddToCart;
+export default ReduxAddToCart;
+
+
+// array of object 
+// object of object 
+
+//[{id: 1, quantity: 10}, {id: 2, quantity: 10}, {id: 3, quantity: 10}, {id: 4, quantity: 10}]
+// cart = 
+// {id:{id: 1, quantity: 10}, id:{id: 2, quantity: 10}, id:{id: 3, quantity: 10}, id:{id: 4, quantity: 10}}
+//cart["3"]
+
+// Object.value(obj);
+// Object.keys(obj);
